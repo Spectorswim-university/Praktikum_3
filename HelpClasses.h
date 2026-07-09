@@ -173,5 +173,10 @@ class Sensoren
             a_temperature = temperatur;
             a_humidity = humidity;
         }
+        
+        void shutdown()
+        {
+            pinMode(pin, INPUT);
+        }
 
 };

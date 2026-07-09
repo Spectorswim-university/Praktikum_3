@@ -23,6 +23,7 @@ void thread1(sem2 &s1, sem1 &s2, sem1 &s3, float &a_humidity, float &a_temperatu
     }
     s2.release();
     s3.release();
+    sensoren.shutdown();
 
 }
 
@@ -33,11 +34,11 @@ void thread2(sem2 &s1, sem1 &s2, sem1 &s3, float &a_temperature, std::atomic<boo
     {
         s2.acquire();
 
-        if(a_temperature < 20.0)
+        if(a_temperature < 20.0f)
         {
             led.YELLOW();
         }
-        else if(a_temperature < 30.0)
+        else if(a_temperature < 30.0f)
         {
             led.GREEN();
         }
@@ -72,7 +73,7 @@ int main()
     wiringPiSetup();
     sem2 s1{2};
     sem1 s2{0}, s3{0};
-    float humidity, temperature;
+    float humidity = 0.0f, temperature = 5.0f;
     std::atomic<bool> stop{false};
 
     std::thread t1([&]() 
